@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSX Map Practice</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .task-list {
+        margin: 30px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+        max-width: 500px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        padding: 10px;
+        margin: 5px 0;
+        background: #f9f9f9;
+        border-radius: 4px;
+      }
+      .completed {
+        text-decoration: line-through;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const tasks = [
+        { id: 1, title: "Hoàn thành bài tập React", isCompleted: true },
+        { id: 2, title: "Nấu cơm", isCompleted: false },
+        { id: 3, title: "Tập thể dục", isCompleted: true },
+        { id: 4, title: "Rửa bát", isCompleted: false },
+        { id: 5, title: "Quét nhà", isCompleted: false },
+      ];
+
+      function TaskList() {
+        return (
+          <div className="task-list">
+            <h2>Danh sách công việc</h2>
+            <ul>
+              {tasks.map((task) => (
+                <li
+                  key={task.id}
+                  className={task.isCompleted ? "completed" : ""}>
+                  {task.title}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<TaskList />);
+    </script>
+  </body>
+</html>

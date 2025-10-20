@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSX Practice</title>
+    <!-- Nhúng React CDN (bản development) -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .task {
+        margin: 30px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+      }
+      button {
+        padding: 8px 16px;
+        margin: 5px;
+        cursor: pointer;
+      }
+      .card {
+        border: 2px solid #333;
+        padding: 20px;
+        max-width: 300px;
+      }
+
+      .btns {
+        display: flex;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 6px 10px;
+        background: #ccc;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        text-decoration: none;
+      }
+
+      .btn:hover {
+        cursor: pointer;
+        opacity: 0.8;
+      }
+
+      .btn-primary {
+        background: #007bff;
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        background: #0056b3;
+        opacity: 1;
+      }
+
+      .btn-bordered {
+        border: 2px solid #007bff;
+        background: transparent;
+        color: #007bff;
+      }
+
+      .btn-bordered:hover {
+        background: #e7f3ff;
+        opacity: 1;
+      }
+
+      .btn-rounded {
+        border-radius: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Viết code tại đây -->
+
+    <script type="text/babel">
+      /**
+       * Đây là: "Heading" component
+       * Khi sử dụng: <Heading type="h1" title="Hello" />
+       * Tương đương: React.createElement(Heading, { type: "h1", title: "Hello" })
+       */
+      // const Heading = ({ type: Tag = "h1", title }) => {
+      //   return <Tag>{title}</Tag>;
+      // };
+
+      /**
+       * Đây là: "Button" component
+       * Khi sử dụng: <Button primary>Click me!</Button>
+       * Tương đương: React.createElement(Button, { primary: true }, "Click me!")
+       */
+      function Button({
+        primary,
+        rounded,
+        bordered,
+        href,
+        size = "m",
+        children,
+        ...passProps // Lấy toàn bộ Props còn lại
+      }) {
+        const Tag = href ? "a" : "button";
+        const className = [
+          "btn",
+          // Có thể dùng cách này
+          // primary && "btn-primary",
+          // rounded && "btn-rounded",
+          // bordered && "btn-bordered",
+          // size,
+        ];
+        // .filter(Boolean)
+        // .join("");
+
+        // Nếu có props tương ứng thì thêm class tương ứng
+        if (primary) className.push("btn-primary");
+        if (rounded) className.push("btn-rounded");
+        if (bordered) className.push("btn-bordered");
+
+        const style = {
+          padding:
+            size === "s"
+              ? "6px 12px"
+              : size === "m"
+              ? "10px 16px"
+              : "14px 24px",
+          fontSize: size === "s" ? "12px" : size === "m" ? "14px" : "16px",
+        };
+
+        return (
+          <Tag
+            {...passProps}
+            className={className.join(" ")}
+            style={style}
+            href={href}>
+            {children}
+          </Tag>
+        );
+      }
+
+      const App = (
+        <>
+          <Button type="button">Button normal</Button>
+          <Button primary rounded bordered type="submit">
+            Button normal
+          </Button>
+          <Button rounded>Button normal</Button>
+          <Button bordered>Button normal</Button>
+          <Button href="https://google.com" target="_blank" primary>
+            Button normal
+          </Button>
+        </>
+      );
+      const root = ReactDOM.createRoot(document.querySelector("#root"));
+      root.render(App);
+    </script>
+  </body>
+</html>

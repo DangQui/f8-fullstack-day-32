@@ -57,7 +57,7 @@
               {tasks.map((task) => (
                 <li
                   key={task.id}
-                  className={task.isCompleted ? "completed" : ""}>
+                  className={task.isCompleted ? "completed" : undefined}>
                   {task.title}
                 </li>
               ))}

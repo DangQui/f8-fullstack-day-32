@@ -23,28 +23,6 @@
         font-family: Arial, sans-serif;
         padding: 20px;
       }
-      .task {
-        margin: 30px 0;
-        padding: 15px;
-        border: 1px solid #ccc;
-      }
-      button {
-        padding: 8px 16px;
-        margin: 5px;
-        cursor: pointer;
-      }
-      .card {
-        border: 2px solid #333;
-        padding: 20px;
-        max-width: 300px;
-      }
-
-      .btns {
-        display: flex;
-        gap: 10px;
-        margin: 20px 0;
-      }
-
       .btn {
         display: inline-block;
         padding: 6px 10px;
@@ -52,6 +30,7 @@
         border: 1px solid transparent;
         border-radius: 3px;
         text-decoration: none;
+        transition: all 0.2s;
       }
 
       .btn:hover {
@@ -83,27 +62,28 @@
       .btn-rounded {
         border-radius: 20px;
       }
+
+      /* Tách size ra thành class riêng */
+      .btn-s {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+
+      .btn-m {
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+
+      .btn-l {
+        padding: 14px 24px;
+        font-size: 16px;
+      }
     </style>
   </head>
   <body>
     <div id="root"></div>
-    <!-- Viết code tại đây -->
 
     <script type="text/babel">
-      /**
-       * Đây là: "Heading" component
-       * Khi sử dụng: <Heading type="h1" title="Hello" />
-       * Tương đương: React.createElement(Heading, { type: "h1", title: "Hello" })
-       */
-      // const Heading = ({ type: Tag = "h1", title }) => {
-      //   return <Tag>{title}</Tag>;
-      // };
-
-      /**
-       * Đây là: "Button" component
-       * Khi sử dụng: <Button primary>Click me!</Button>
-       * Tương đương: React.createElement(Button, { primary: true }, "Click me!")
-       */
       function Button({
         primary,
         rounded,
@@ -111,41 +91,19 @@
         href,
         size = "m",
         children,
-        ...passProps // Lấy toàn bộ Props còn lại
+        ...passProps
       }) {
         const Tag = href ? "a" : "button";
-        const className = [
-          "btn",
-          // Có thể dùng cách này
-          // primary && "btn-primary",
-          // rounded && "btn-rounded",
-          // bordered && "btn-bordered",
-          // size,
-        ];
-        // .filter(Boolean)
-        // .join("");
+        const className = ["btn"];
 
-        // Nếu có props tương ứng thì thêm class tương ứng
+        // Thêm class tương ứng
         if (primary) className.push("btn-primary");
         if (rounded) className.push("btn-rounded");
         if (bordered) className.push("btn-bordered");
-
-        const style = {
-          padding:
-            size === "s"
-              ? "6px 12px"
-              : size === "m"
-              ? "10px 16px"
-              : "14px 24px",
-          fontSize: size === "s" ? "12px" : size === "m" ? "14px" : "16px",
-        };
+        if (size) className.push(`btn-${size}`);
 
         return (
-          <Tag
-            {...passProps}
-            className={className.join(" ")}
-            style={style}
-            href={href}>
+          <Tag {...passProps} className={className.join(" ")} href={href}>
             {children}
           </Tag>
         );
@@ -153,17 +111,24 @@
 
       const App = (
         <>
-          <Button type="button">Button normal</Button>
-          <Button primary rounded bordered type="submit">
-            Button Primary
+          <Button type="button" size="s">
+            Button Small
           </Button>
-          <Button rounded>Button Rounded</Button>
-          <Button bordered>Button Bordered</Button>
-          <Button href="https://google.com" target="_blank" primary>
+          <Button primary rounded bordered type="submit" size="m">
+            Button Medium
+          </Button>
+          <Button rounded size="l">
+            Button Large
+          </Button>
+          <Button bordered size="m">
+            Button Bordered
+          </Button>
+          <Button href="https://google.com" target="_blank" primary size="l">
             Google.com
           </Button>
         </>
       );
+
       const root = ReactDOM.createRoot(document.querySelector("#root"));
       root.render(App);
     </script>
